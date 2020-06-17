@@ -16,13 +16,26 @@
 
                     showです
                     {{ $contact->your_name }}
-                    <form action="" method="get">
+                    <form action="{{ route('contact.edit', ['id' => $contact->id]) }}" method="get">
                         @csrf
                         <input type="submit" value="変更する" class="btn btn-info">
+                    </form>
+                    <form action="{{ route('contact.destroy', ['id' => $contact->id]) }}" method="post" id="delete_{{ $contact->id }}">
+                        @csrf
+                        <a href="#" class="btn btn-danger" data-id="{{ $contact->id }}" onclick="deletePost(this);">削除する</a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function deletePost(e) {
+        'use strict';
+        if (confirm('本当に削除していいですか？')) {
+            document.getElementById('delete_' + e.dataset.id).submit();
+        }
+    }
+</script>
 @endsection
